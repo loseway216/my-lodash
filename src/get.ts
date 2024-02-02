@@ -1,22 +1,25 @@
 export default function get(
   object: any,
   path: Array<string> | string,
-  defaultValue?: any
+  defaultValue: any = undefined
 ) {
-  let result = object;
-  let pathArray: Array<string>;
-
-  if (typeof path === "string") {
-    pathArray = path.split(".");
-  } else {
-    pathArray = path;
+  if (object == null || typeof object !== "object" || path == null) {
+    return defaultValue;
   }
 
+  const pathArray = Array.isArray(path)
+    ? path
+    : path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
+
+  let result = object;
+
   for (let i = 0; i < pathArray.length; i++) {
-    if (result[pathArray[i]] !== undefined) {
-      result = result[pathArray[i]];
+    const key = pathArray[i];
+    if (result[key] !== undefined) {
+      result = result[key];
     } else {
-      return defaultValue ?? undefined;
+      result = defaultValue;
+      break;
     }
   }
 
