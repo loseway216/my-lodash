@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
+  "include": ["src", "__test__"], // Include the "test" directory for Jest tests
   "exclude": ["node_modules"]
 }
